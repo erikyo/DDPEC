@@ -1,14 +1,6 @@
-import {
-	defaultEqState,
-	getDevice,
-	getEqState,
-	getGlobalGainState,
-	renderUI,
-	setEqState,
-	setGlobalGainState,
-} from "./fn.ts";
-import { log, updateGlobalGain } from "./helpers.ts";
-import type { Band, EQ } from "./main.ts";
+import {defaultEqState, getDevice, getEqState, getGlobalGainState, renderUI, setEqState, setGlobalGainState,} from "./fn.ts";
+import {log, updateGlobalGain} from "./helpers.ts";
+import type {EQ} from "./main.ts";
 
 interface ProfileData {
 	globalGain: number;
@@ -129,7 +121,10 @@ export async function importProfile(e: Event) {
 			// Simple heuristic detection
 			if (result.trim().startsWith("{")) {
 				profile = parseJsonProfile(result);
-			} else if (result.trim().startsWith("Preamp:") || result.includes("Filter 1:")) {
+			} else if (
+				result.trim().startsWith("Preamp:") ||
+				result.includes("Filter 1:")
+			) {
 				profile = parseTextProfile(result);
 			} else {
 				throw new Error("Unknown file format");

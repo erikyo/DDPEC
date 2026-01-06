@@ -11,10 +11,11 @@ import {
 	VID_FIIO,
 } from "./constants.ts";
 import {
-    getDevice,
-    getEqState,
-    getGlobalGainState, renderUI,
-    setGlobalGain,
+	getDevice,
+	getEqState,
+	getGlobalGainState,
+	renderUI,
+	setGlobalGain,
 } from "./fn.ts";
 import { delay, log, refreshStripUI } from "./helpers.ts";
 import type { Band } from "./main.ts";
@@ -139,7 +140,7 @@ export function setupListener(device: HIDDevice) {
 			}
 		}
 
-        renderUI(eqState);
+		renderUI(eqState);
 	});
 }
 

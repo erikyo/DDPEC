@@ -4,4 +4,3 @@ export default defineConfig({
 	plugins: [],
 	base: "https://erikyo.github.io/ddpec/",
 });
-
