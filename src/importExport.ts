@@ -1,6 +1,6 @@
-import {defaultEqState, getDevice, getEqState, getGlobalGainState, renderUI, setEqState, setGlobalGainState,} from "./fn.ts";
-import {log, updateGlobalGain} from "./helpers.ts";
-import type {EQ} from "./main.ts";
+import { defaultEqState, getDevice, getEqState, getGlobalGainState, renderUI, setEqState, setGlobalGainState, } from "./fn.ts";
+import { log, updateGlobalGain } from "./helpers.ts";
+import type { EQ } from "./main.ts";
 
 interface ProfileData {
 	globalGain: number;
@@ -142,6 +142,9 @@ export async function importProfile(e: Event) {
 		} catch (err) {
 			log(`Import Error: ${(err as Error).message}`);
 			console.error(err);
+		} finally {
+			// Clear input so the same file can be selected again
+			target.value = "";
 		}
 	};
 	reader.readAsText(file);
