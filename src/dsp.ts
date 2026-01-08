@@ -119,19 +119,34 @@ export function setupListener(device: HIDDevice) {
 			const idx = data[4];
 			if (idx < NUM_BANDS) {
 				const view = new DataView(data.buffer);
-				const freq = view.getUint16(27, true);
-				const q = Math.round((view.getUint16(29, true) / 256) * 100) / 100;
-				const gain = Math.round((view.getInt16(31, true) / 256) * 10) / 10;
+				const rawFreq = view.getUint16(27, true);
+				const rawQ = view.getUint16(29, true);
+				const rawGain = view.getInt16(31, true);
 				const typeCode = data[33];
+
+				// Calculate values
+				const freq = rawFreq;
+				const q = Math.round((rawQ / 256) * 100) / 100;
+				const gain = Math.round((rawGain / 256) * 10) / 10;
 
 				let typeStr = "PK";
 				if (typeCode === 1) typeStr = "LSQ";
 				else if (typeCode === 3) typeStr = "HSQ";
 
-				// Update State from Device
-				eqState[idx].freq = freq ?? DEFAULT_FREQS[idx]; // Fallback if 0
-				eqState[idx].q = q ?? 1.0;
-				eqState[idx].gain = gain;
+				// Validate data - 0xFFFF (65535) indicates uninitialized flash memory
+				// Also check for unreasonable values that indicate corrupted data
+				const isInvalidData =
+					rawFreq === 0xffff ||
+					rawFreq === 0 ||
+					rawFreq > 24000 ||
+					rawQ === 0xffff ||
+					q > 100 ||
+					q <= 0;
+
+				// Update State from Device with validation
+				eqState[idx].freq = isInvalidData ? DEFAULT_FREQS[idx] : freq;
+				eqState[idx].q = isInvalidData ? 1.0 : q;
+				eqState[idx].gain = isInvalidData ? 0 : gain;
 				eqState[idx].type = typeStr;
 				// Note: Hardware doesn't store an "enabled" state, assume enabled if gain != 0 or default
 				eqState[idx].enabled = true;
