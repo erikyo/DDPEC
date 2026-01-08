@@ -1,6 +1,9 @@
 import { defineConfig } from "vite";
+import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
-	plugins: [],
+    plugins: [
+        tailwindcss(),
+    ],
 	base: "https://erikyo.github.io/DDPEC/",
 });

@@ -2,50 +2,57 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>DDPEC</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body>
-  <div id="app"></div>
-  <h1 class="text-2xl font-bold">🎧 DDPEC</h1>
-  <p class="subtitle">It's a short for DAC DSP Parametric EQ Controller</p>
+<body class="font-sans bg-[#121212] text-gray-200 m-0 p-5 flex flex-col items-center min-h-screen">
+<div id="app"></div>
 
-  <div class="top-bar">
-    <div style="display:flex; align-items:center; gap:10px;">
-      <button id="btnConnect" class="primary">CONNECT</button>
-      <span id="statusBadge" class="status-badge">OFFLINE</span>
-      <span id="fwVersion" style="font-size: 0.8rem; color: #666;"></span>
-    </div>
+<h1 class="text-2xl font-bold text-green-500 mb-1 uppercase tracking-[2px]">🎧 DDPEC</h1>
+<p class="text-gray-500 text-sm mb-5">It's a short for DAC DSP Parametric EQ Controller</p>
 
-    <div style="display:flex; align-items:center; gap:10px;">
-      <div style="text-align: right;">
-        <label>Pre-Amp</label>
-        <div id="globalGainDisplay" style="font-weight:bold; color:var(--accent-color)">0 dB</div>
-      </div>
-      <input type="range" id="globalGainSlider" min="-20" max="10" step="1" value="0" style="width: 200px;" disabled>
-    </div>
-
-    <div class="btn-group">
-      <button id="btnReset" class="reset" disabled>RESET DEFAULTS</button>
-      <button id="btnImport">Import</button>
-      <button id="btnExport" disabled>Export</button>
-      <input type="file" id="fileInput" accept=".json,.txt" style="display: none;">
-    </div>
+<!-- Top Bar -->
+<div class="flex gap-4 w-full max-w-[1100px] bg-[#1e1e1e] p-4 rounded-lg items-center justify-between mb-5 border border-[#333] flex-wrap">
+  <div class="flex items-center gap-3">
+    <button id="btnConnect" class="px-4 py-2 rounded font-semibold cursor-pointer transition-all bg-green-500 text-black text-sm hover:bg-green-400">CONNECT</button>
+    <span id="statusBadge" class="px-3 py-1 rounded font-bold text-xs bg-[#333] text-gray-500">OFFLINE</span>
+    <span id="fwVersion" class="text-xs text-gray-600"></span>
   </div>
 
-  <div id="eqContainer" class="eq-container">
+  <div class="flex items-center gap-3">
+    <div class="text-right">
+      <label class="text-xs text-gray-400 block">Pre-Amp</label>
+      <div id="globalGainDisplay" class="font-bold text-green-500">0 dB</div>
+    </div>
+    <input type="range" id="globalGainSlider" min="-20" max="10" step="1" value="0" class="w-[200px]" disabled>
   </div>
 
-  <div class="top-bar" style="justify-content: flex-end;">
-    <button id="btnSync" class="action" disabled>SYNC TO RAM (APPLY)</button>
-    <button id="btnFlash" class="action" style="background: #e65100;" disabled>SAVE TO FLASH (PERMANENT)</button>
+  <div class="btn-group flex gap-3">
+    <button id="btnReset" class="px-4 py-2 rounded font-semibold cursor-pointer transition-all bg-red-700 text-white text-sm hover:bg-red-600 reset" disabled>RESET DEFAULTS</button>
+    <button id="btnImport" class="px-4 py-2 rounded font-semibold cursor-pointer transition-all bg-gray-700 text-white text-sm hover:bg-gray-600">Import</button>
+    <button id="btnExport" class="px-4 py-2 rounded font-semibold cursor-pointer transition-all bg-gray-700 text-white text-sm hover:bg-gray-600" disabled>Export</button>
+    <input type="file" id="fileInput" accept=".json,.txt" style="display: none;">
   </div>
+</div>
 
-  <div id="logConsole" class="log-console">Ready to connect...</div>
-  <script type="module" src="/src/main.ts"></script>
+<!-- EQ Container -->
+<div id="eqContainer" class="eq-container grid grid-cols-[repeat(auto-fit,minmax(110px,1fr))] gap-2 w-full max-w-[1100px] mb-5">
+  <!-- EQ strips will be dynamically inserted here -->
+</div>
+
+<!-- Bottom Bar -->
+<div class="top-bar flex gap-4 w-full max-w-[1100px] bg-[#1e1e1e] p-4 rounded-lg items-center justify-end mb-5 border border-[#333] flex-wrap">
+  <button id="btnSync" class="action px-4 py-2 rounded font-semibold cursor-pointer transition-all bg-blue-600 text-white text-sm hover:bg-blue-500" disabled>SYNC TO RAM (APPLY)</button>
+  <button id="btnFlash" class="action px-4 py-2 rounded font-semibold cursor-pointer transition-all bg-orange-700 text-white text-sm hover:bg-orange-600" disabled>SAVE TO FLASH (PERMANENT)</button>
+</div>
+
+<!-- Log Console -->
+<div id="logConsole" class="w-full max-w-[1100px] h-20 bg-black border border-gray-400 text-gray-400 font-mono text-xs p-3 overflow-y-auto box-border mt-3">Ready to connect...</div>
+
+<script type="module" src="/src/main.ts"></script>
 </body>
 
 </html>
